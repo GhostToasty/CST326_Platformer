@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7985306337177074842}
   - component: {fileID: 8871215822974092347}
   - component: {fileID: 7822519193309246309}
+  - component: {fileID: 5514662298554897360}
   m_Layer: 0
   m_Name: Brick
   m_TagString: Untagged
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5514662298554897360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251716736208138254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ec72da8f4b97d4182038eddc2ab885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroySelf
