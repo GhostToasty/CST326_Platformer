@@ -40,6 +40,7 @@ public class LevelParser : MonoBehaviour
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject dirtPrefab;
+    public GameObject environmentRoot;
 
     public TextMeshProUGUI countTime;
     private float timeLeft = 300;
@@ -65,6 +66,7 @@ public class LevelParser : MonoBehaviour
         // Push lines onto a stack so we can pop bottom-up rows. This is easy to reason
         //  about, but an index-based loop over the string array is faster.
         Stack<string> levelRows = new Stack<string>();
+        levelRoot.position = new Vector3(0f, 0f, 0f);
 
         foreach (string line in levelFile.text.Split('\n'))
             levelRows.Push(line);
@@ -89,7 +91,7 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform dirtInstance = Instantiate(dirtPrefab).transform;
                     dirtInstance.position = newPosition; 
-                    // Instantiate(rockPrefab);
+                    dirtInstance.transform.parent = environmentRoot.transform;
                 }
 
                 if (currentChar == 's')
@@ -97,6 +99,7 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform rockInstance = Instantiate(rockPrefab).transform;
                     rockInstance.position = newPosition;
+                    rockInstance.transform.parent = environmentRoot.transform;
                 }
 
                 if (currentChar == 'b')
@@ -104,6 +107,7 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform brickInstance = Instantiate(brickPrefab).transform;
                     brickInstance.position = newPosition;
+                    brickInstance.transform.parent = environmentRoot.transform;
                 }
 
                 if (currentChar == '?')
@@ -111,6 +115,7 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform questionBoxInstance = Instantiate(questionBoxPrefab).transform;
                     questionBoxInstance.position = newPosition;
+                    questionBoxInstance.transform.parent = environmentRoot.transform;
                 }
                 
 
@@ -127,6 +132,11 @@ public class LevelParser : MonoBehaviour
            Destroy(child.gameObject);
         
         LoadLevel();
+    }
+
+    public void DestroyBrick(Transform brickInstance)
+    {
+        Destroy(brickInstance.gameObject);
     }
 
 }
