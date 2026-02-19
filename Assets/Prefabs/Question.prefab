@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1009665236277615647}
   - component: {fileID: 2647884320376352314}
   - component: {fileID: 3794261945543609357}
+  - component: {fileID: 8955379377441733488}
   m_Layer: 0
   m_Name: Question
   m_TagString: Untagged
@@ -112,3 +113,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8955379377441733488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847958316943159433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698ceed834c825341b6baed866909904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestionFlash
+  offsetAmount: 0.2
+  increment: 0.2
+  offsetMax: 0.8
+  incrementMin: 0

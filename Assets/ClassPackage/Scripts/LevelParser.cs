@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.InputSystem.Controls;
 
 /*
  * This script is responsible for reading a level layout from a text file and constructing the level
@@ -44,6 +45,9 @@ public class LevelParser : MonoBehaviour
 
     public TextMeshProUGUI countTime;
     private float timeLeft = 300;
+    private float coinTime = 10;
+    private bool coinAnimate = false;
+
 
     void Start()
     {
@@ -59,6 +63,12 @@ public class LevelParser : MonoBehaviour
         timeLeft -= Time.deltaTime;
         string count = $"Time{System.Convert.ToInt16(timeLeft)}";
         countTime.text = count;
+
+        if (coinAnimate)
+        {
+            coinTime -= Time.deltaTime;
+        }
+         
     }
 
     void LoadLevel()
@@ -113,11 +123,10 @@ public class LevelParser : MonoBehaviour
                 if (currentChar == '?')
                 {
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
-                    Transform questionBoxInstance = Instantiate(questionBoxPrefab).transform;
-                    questionBoxInstance.position = newPosition;
+                    GameObject questionBoxInstance = Instantiate(questionBoxPrefab);
+                    questionBoxInstance.transform.position = newPosition;
                     questionBoxInstance.transform.parent = environmentRoot.transform;
                 }
-                
 
             }
 
@@ -138,6 +147,29 @@ public class LevelParser : MonoBehaviour
     {
         Destroy(brickInstance.gameObject);
     }
+
+    // public void CoinAnimation(Transform questionBoxInstance, GameObject coin)
+    // {
+    //     Vector3 boxPosition = transform.position;
+    //     // Debug.Log(boxPosition);
+    //     GameObject coinInstance = Instantiate(coin);
+    //     coinInstance.transform.position = new Vector3(boxPosition.x, boxPosition.y, -0.1f);
+
+    //     float degrees = 30;
+        
+    //     coinTime = 0;
+    //     coinAnimate = true;
+        
+    //     // while (coinAnimate == true)
+    //     // {
+    //     //     coinInstance.transform.Rotate(new Vector3(0f, 0f, degrees * Time.deltaTime));
+    //     //     Debug.Log(coinTime);
+    //     // }
+    
+    //     // Destroy(coinInstance);
+    //     coinAnimate = false;
+
+    // }
 
 }
 

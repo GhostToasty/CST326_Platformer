@@ -1581,6 +1581,7 @@ MonoBehaviour:
   question: {fileID: 847958316943159433, guid: 12a72d6c9849cae41a0e67cbc0fb3fca, type: 3}
   coinText: {fileID: 1953885955}
   levelParser: {fileID: 610288773}
+  coin: {fileID: 1664695992329035492, guid: 4fe1d12b06816fc41a1a2f1023cc84ff, type: 3}
 --- !u!4 &1932672095
 Transform:
   m_ObjectHideFlags: 0
