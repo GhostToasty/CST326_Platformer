@@ -45,8 +45,6 @@ public class LevelParser : MonoBehaviour
 
     public TextMeshProUGUI countTime;
     private float timeLeft = 300;
-    private float coinTime = 10;
-    private bool coinAnimate = false;
 
 
     void Start()
@@ -64,11 +62,6 @@ public class LevelParser : MonoBehaviour
         string count = $"Time{System.Convert.ToInt16(timeLeft)}";
         countTime.text = count;
 
-        if (coinAnimate)
-        {
-            coinTime -= Time.deltaTime;
-        }
-         
     }
 
     void LoadLevel()
