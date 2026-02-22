@@ -14,6 +14,7 @@ public class CharacterDriver : MonoBehaviour
 
     // underscore shows that variable is private and local to file 
     CharacterController _controller;
+    Animator _animator;
     Vector2 _velocity;
     Quaternion facingRight;
     Quaternion facingLeft;
@@ -22,8 +23,9 @@ public class CharacterDriver : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        facingRight = Quaternion.identity;
-        facingLeft = Quaternion.Euler(0f, 180f, 0f);
+        facingRight = Quaternion.Euler(0f, 90f, 0f);
+        facingLeft = Quaternion.Euler(0f, 270f, 0f);
+        _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
     }
 
@@ -49,7 +51,7 @@ public class CharacterDriver : MonoBehaviour
                     _velocity.x = 0;
                 
                 _velocity.x += direction * groundAcceleration * Time.deltaTime;
-                _velocity.x = Mathf.Clamp(_velocity.x, -walkSpeed, walkSpeed);
+                _velocity.x = Mathf.Clamp(_velocity.x, -runSpeed, runSpeed);
 
                 //basically an if-else statement, ? is if, : is else
                 transform.rotation = (direction > 0f) ? facingRight : facingLeft;
@@ -70,11 +72,21 @@ public class CharacterDriver : MonoBehaviour
             {
                 gravityModifier = 2f;
             }
+
+            if (direction != 0f)
+            {
+                if (Mathf.Sign(direction) != Mathf.Sign(_velocity.x))
+                    _velocity.x = 0;
+                
+                //basically an if-else statement, ? is if, : is else
+                transform.rotation = (direction > 0f) ? facingRight : facingLeft;
+            }
         }
 
             
         float gravity = 2f * apexHeight / (apexTime * apexTime);
         _velocity.y -= gravity * gravityModifier * Time.deltaTime;
+        _velocity.y = Mathf.Clamp(_velocity.y, -gravity * gravityModifier, gravity * gravityModifier);
 
         float deltaX = _velocity.x * Time.deltaTime;
         float deltaY = _velocity.y * Time.deltaTime;
@@ -90,6 +102,9 @@ public class CharacterDriver : MonoBehaviour
         {
             _velocity.x = 0f;
         }
+
+        _animator.SetFloat("Speed", Mathf.Abs(_velocity.x));
+        _animator.SetBool("Grounded", _controller.isGrounded);
 
         // Debug.Log($"Grounded: {_controller.isGrounded}");
     }

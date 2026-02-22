@@ -1,7 +1,9 @@
+// using System.Numerics;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Raycasting : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class Raycasting : MonoBehaviour
     public GameObject question;
     public TextMeshProUGUI coinText;
     private int coinCount = 00;
+    public TextMeshProUGUI pointText;
+    private int pointCount = 0;
     public LevelParser levelParser;
     // public GameObject coin;
     
@@ -38,12 +42,14 @@ public class Raycasting : MonoBehaviour
                     if (clickHit.collider.name == "Brick(Clone)")
                     {
                         levelParser.DestroyBrick(clickHit.transform);
+                        PointCount();
                         // Debug.Log("collide brick");
                     }   
 
                     if (clickHit.collider.name == "Question(Clone)")
                     {
                         // levelParser.CoinAnimation(clickHit.transform, coin);
+                        PointCount();
                         coinCount += 1;
                         if (coinCount < 10)
                         {
@@ -64,6 +70,43 @@ public class Raycasting : MonoBehaviour
             }
                             
         }
+    }
+
+    void PointCount()
+    {
+        pointCount += 100;
+        if (pointCount < 1000)
+        {
+            string point = $"Mario\n000{pointCount}";
+            pointText.text = point;
+        }
+        else if (pointCount < 10000)
+        {
+            string point = $"Mario\n00{pointCount}";
+            pointText.text = point;
+        }
+        else if (pointCount < 100000)
+        {
+            string point = $"Mario\n0{pointCount}";
+            pointText.text = point;
+        }
+        else
+        {
+            string point = $"Mario\n{pointCount}";
+            pointText.text = point;
+        }   
+    }
+
+    public void ResetUI()
+    {
+        coinCount = 0;
+        pointCount = 0;
+
+        string point = $"Mario\n00000{pointCount}";
+        pointText.text = point;
+
+        string coin = $"x0{coinCount}";
+        coinText.text = coin;
     }
 
 }
