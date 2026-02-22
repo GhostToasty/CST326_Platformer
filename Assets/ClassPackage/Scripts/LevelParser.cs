@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.InputSystem.Controls;
+using Unity.VisualScripting;
 
 /*
  * This script is responsible for reading a level layout from a text file and constructing the level
@@ -41,11 +42,14 @@ public class LevelParser : MonoBehaviour
     public GameObject brickPrefab;
     public GameObject questionBoxPrefab;
     public GameObject dirtPrefab;
+    public GameObject lavaPrefab;
+    public GameObject goalPrefab;
     public GameObject environmentRoot;
 
     public TextMeshProUGUI countTime;
-    private float timeLeft = 300;
-
+    private float timeLeft = 100;
+    private bool gameOver = false;
+    private bool coinTaken;
 
     void Start()
     {
@@ -58,9 +62,18 @@ public class LevelParser : MonoBehaviour
         if (Keyboard.current.rKey.wasPressedThisFrame)
             ReloadLevel();
 
-        timeLeft -= Time.deltaTime;
-        string count = $"Time{System.Convert.ToInt16(timeLeft)}";
-        countTime.text = count;
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            string count = $"Time{System.Convert.ToInt16(timeLeft)}";
+            countTime.text = count;
+        }
+        if(timeLeft < 0 && !gameOver)
+        {
+            Debug.Log("Time's Up! Game Over!");
+            gameOver = true;
+        }
+            
 
     }
 
@@ -121,6 +134,22 @@ public class LevelParser : MonoBehaviour
                     questionBoxInstance.transform.parent = environmentRoot.transform;
                 }
 
+                if (currentChar == 'l')
+                {
+                    Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                    GameObject lavaInstance = Instantiate(lavaPrefab);
+                    lavaInstance.transform.position = newPosition;
+                    lavaInstance.transform.parent = environmentRoot.transform;
+                }
+
+                if (currentChar == 'g')
+                {
+                    Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
+                    GameObject goalInstance = Instantiate(goalPrefab);
+                    goalInstance.transform.position = newPosition;
+                    goalInstance.transform.parent = environmentRoot.transform;
+                }
+
             }
 
             row++;
@@ -139,6 +168,18 @@ public class LevelParser : MonoBehaviour
     public void DestroyBrick(Transform brickInstance)
     {
         Destroy(brickInstance.gameObject);
+    }
+
+    public void LavaTouch()
+    {
+        Debug.Log("Game Over");
+        ReloadLevel();
+        timeLeft = 100;
+    }
+
+    public void GoalTouch()
+    {
+        Debug.Log("Game Win!");
     }
 
     // public void CoinAnimation(Transform questionBoxInstance, GameObject coin)
