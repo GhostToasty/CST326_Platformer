@@ -16,12 +16,12 @@ public class CameraMovement : MonoBehaviour
     {
         Vector3 currPosition = transform.position;
 
-        if (Keyboard.current.rightArrowKey.isPressed)
+        if (Keyboard.current.dKey.isPressed)
             {
                 if (currPosition.x < 207)
                     transform.position = new Vector3(currPosition.x + (speed * Time.deltaTime), 7.5f, -10f);
             } 
-            if (Keyboard.current.leftArrowKey.isPressed)
+            if (Keyboard.current.aKey.isPressed)
             {
                 if (currPosition.x > 16)
                     transform.position = new Vector3(currPosition.x - (speed * Time.deltaTime), 7.5f, -10f);

@@ -49,7 +49,9 @@ public class LevelParser : MonoBehaviour
     public TextMeshProUGUI countTime;
     private float timeLeft = 100;
     private bool gameOver = false;
-    private bool coinTaken;
+    // private bool coinTaken;
+    // public CoinCollected coin;
+
 
     void Start()
     {
@@ -83,6 +85,7 @@ public class LevelParser : MonoBehaviour
         //  about, but an index-based loop over the string array is faster.
         Stack<string> levelRows = new Stack<string>();
         levelRoot.position = new Vector3(0f, 0f, 0f);
+        levelRoot.transform.parent = environmentRoot.transform;
 
         foreach (string line in levelFile.text.Split('\n'))
             levelRows.Push(line);
@@ -107,7 +110,7 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform dirtInstance = Instantiate(dirtPrefab).transform;
                     dirtInstance.position = newPosition; 
-                    dirtInstance.transform.parent = environmentRoot.transform;
+                    dirtInstance.transform.parent = levelRoot.transform;
                 }
 
                 if (currentChar == 's')
@@ -115,7 +118,7 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform rockInstance = Instantiate(rockPrefab).transform;
                     rockInstance.position = newPosition;
-                    rockInstance.transform.parent = environmentRoot.transform;
+                    rockInstance.transform.parent = levelRoot.transform;
                 }
 
                 if (currentChar == 'b')
@@ -123,31 +126,32 @@ public class LevelParser : MonoBehaviour
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform brickInstance = Instantiate(brickPrefab).transform;
                     brickInstance.position = newPosition;
-                    brickInstance.transform.parent = environmentRoot.transform;
+                    brickInstance.transform.parent = levelRoot.transform;
                 }
 
                 if (currentChar == '?')
                 {
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
-                    GameObject questionBoxInstance = Instantiate(questionBoxPrefab);
+                    Transform questionBoxInstance = Instantiate(questionBoxPrefab).transform;
+                    // questionBoxInstance.GetComponent<CoinCollected>().coinGotten = false;
                     questionBoxInstance.transform.position = newPosition;
-                    questionBoxInstance.transform.parent = environmentRoot.transform;
+                    questionBoxInstance.transform.parent = levelRoot.transform;
                 }
 
                 if (currentChar == 'l')
                 {
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
-                    GameObject lavaInstance = Instantiate(lavaPrefab);
+                    Transform lavaInstance = Instantiate(lavaPrefab).transform;
                     lavaInstance.transform.position = newPosition;
-                    lavaInstance.transform.parent = environmentRoot.transform;
+                    lavaInstance.transform.parent = levelRoot.transform;
                 }
 
                 if (currentChar == 'g')
                 {
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
-                    GameObject goalInstance = Instantiate(goalPrefab);
+                    Transform goalInstance = Instantiate(goalPrefab).transform;
                     goalInstance.transform.position = newPosition;
-                    goalInstance.transform.parent = environmentRoot.transform;
+                    goalInstance.transform.parent = levelRoot.transform;
                 }
 
             }
@@ -160,7 +164,11 @@ public class LevelParser : MonoBehaviour
     void ReloadLevel()
     {
         foreach (Transform child in levelRoot)
-           Destroy(child.gameObject);
+        {
+            Debug.Log(child.gameObject);
+            Destroy(child.gameObject);
+        }
+           
         
         LoadLevel();
     }
@@ -181,6 +189,17 @@ public class LevelParser : MonoBehaviour
     {
         Debug.Log("Game Win!");
     }
+
+    // public bool GetCoin(Transform questionInstance)
+    // {
+    //     if(questionInstance.GetComponent<CoinCollected>().coinGotten == false)
+    //     {
+    //         questionInstance.GetComponent<CoinCollected>().coinGotten = true;
+    //         return false;
+    //     }
+
+    //     return true;
+    // }
 
     // public void CoinAnimation(Transform questionBoxInstance, GameObject coin)
     // {

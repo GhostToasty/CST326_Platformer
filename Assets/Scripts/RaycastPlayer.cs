@@ -3,11 +3,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+// using System.Numerics;
 
 public class RaycastPlayer : MonoBehaviour
 {
-    // public Rigidbody player;
-    public Rigidbody player;
+    
     public GameObject brick;
     public GameObject question;
     public TextMeshProUGUI coinText;
@@ -15,28 +15,25 @@ public class RaycastPlayer : MonoBehaviour
     public TextMeshProUGUI pointText;
     private int pointCount = 0;
     public LevelParser levelParser;
-
+    public Rigidbody player;
+    public CharacterDriver charDrive;
+    private bool gotCoin = false;
     
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // Vector3 origin = player.transform.position;
-        // Vector3 direction = player.transform.forward;
         RaycastHit playerHit;
-        // Ray playerRay = new Ray(player.position + Vector3.up * 0.01f, Vector3.up);
         Ray playerRay = new Ray(player.transform.position, Vector3.up);
-        Debug.Log(player.transform.position);
 
-        Debug.DrawLine(player.transform.position, Vector3.up, Color.green);
+        Debug.DrawLine(playerRay.origin, playerRay.origin + playerRay.direction * 5f, Color.green);
 
         if (Physics.Raycast(playerRay, out playerHit))
         {
-            Debug.DrawLine(playerRay.origin, playerHit.point, Color.blue);
-
-            // Debug.DrawLine(playerRay.origin, playerHit.point, Color.red);
-    
-            if (playerHit.collider != null)
+            // Debug.DrawLine(playerRay.origin, playerHit.point, Color.blue);
+            // Debug.Log ("hit: " + playerHit.collider.name);
+            
+            if (playerHit.collider != null && playerHit.collider.name != "Mario")
             {
                 Debug.Log ("hit: " + playerHit.collider.name);
                 
@@ -49,25 +46,32 @@ public class RaycastPlayer : MonoBehaviour
 
                 if (playerHit.collider.name == "Question(Clone)")
                 {
-                    // levelParser.CoinAnimation(playerHit.transform, coin);
-                    PointCount();
-                    coinCount += 1;
-                    if (coinCount < 10)
+                    if (charDrive.CheckGrounded() == false && gotCoin == false)
                     {
-                        string coin = $"x0{coinCount}";
-                        coinText.text = coin;
-                    }   
-                    else
-                    {
-                        string coin = $"x{coinCount}";
-                        coinText.text = coin;
+                        PointCount();
+                        coinCount += 1;
+                        if (coinCount < 10)
+                        {
+                            string coin = $"x0{coinCount}";
+                            coinText.text = coin;
+                        }   
+                        else
+                        {
+                            string coin = $"x{coinCount}";
+                            coinText.text = coin;
+                        }
+                        gotCoin = true;
                     }
                     // Debug.Log("collide question");
                 }
+
             }
-            
                             
         }
+
+        // Debug.Log(charDrive.CheckGrounded());
+        if (charDrive.CheckGrounded() == true)
+            gotCoin = false;
     }
 
     void PointCount()
@@ -92,13 +96,20 @@ public class RaycastPlayer : MonoBehaviour
         {
             string point = $"Mario\n{pointCount}";
             pointText.text = point;
-        } 
+        }   
     }
 
 
     void ResetUI()
     {
-        
+        coinCount = 0;
+        pointCount = 0;
+
+        string point = $"Mario\n00000{pointCount}";
+        pointText.text = point;
+
+        string coin = $"x0{coinCount}";
+        coinText.text = coin;
     }
 
 
