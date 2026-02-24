@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
@@ -10,6 +11,7 @@ public class CharacterDriver : MonoBehaviour
     public float groundAcceleration = 15f;
     public float apexHeight = 4.5f;
     public float apexTime = 0.5f;
+    public Camera cameraTrack;
 
 
     // underscore shows that variable is private and local to file 
@@ -18,6 +20,9 @@ public class CharacterDriver : MonoBehaviour
     Vector2 _velocity;
     Quaternion facingRight;
     Quaternion facingLeft;
+    Quaternion cameraSet;
+    float camCharDiff = 0;
+
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +32,8 @@ public class CharacterDriver : MonoBehaviour
         facingLeft = Quaternion.Euler(0f, 270f, 0f);
         _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
+        Vector3 posDiff = cameraTrack.transform.position - transform.position;
+        camCharDiff = posDiff.x;
     }
 
     // Update is called once per frame
@@ -55,6 +62,7 @@ public class CharacterDriver : MonoBehaviour
 
                 //basically an if-else statement, ? is if, : is else
                 transform.rotation = (direction > 0f) ? facingRight : facingLeft;
+                CamTrack(direction);
             }
             else
             {
@@ -78,8 +86,8 @@ public class CharacterDriver : MonoBehaviour
                 if (Mathf.Sign(direction) != Mathf.Sign(_velocity.x))
                     _velocity.x = 0;
                 
-                //basically an if-else statement, ? is if, : is else
                 transform.rotation = (direction > 0f) ? facingRight : facingLeft;
+                CamTrack(direction);
             }
         }
 
@@ -108,4 +116,30 @@ public class CharacterDriver : MonoBehaviour
 
         // Debug.Log($"Grounded: {_controller.isGrounded}");
     }
+
+    void CamTrack(float direction)
+    {
+        Vector3 currCamPosition = cameraTrack.transform.position;
+
+        if (direction != 0)
+        {
+            if (_velocity.x == 0)
+                cameraTrack.transform.position = new Vector3(transform.position.x + camCharDiff, 7.5f, -10f);
+            else 
+                cameraTrack.transform.position = new Vector3(currCamPosition.x + (_velocity.x * Time.deltaTime), 7.5f, -10f);
+        } 
+
+        if (_velocity.x == 0)
+        {
+            cameraTrack.transform.position = new Vector3(transform.position.x + camCharDiff, 7.5f, -10f);
+        }
+
+    }
+
+    public bool CheckGrounded()
+    {
+        // Debug.Log(_controller.isGrounded);
+        return _controller.isGrounded;
+    }
+
 }
