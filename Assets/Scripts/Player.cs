@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public LevelParser levelParser;
-    public Raycasting raycasting;
+    public RaycastPlayer raycastPlayer;
     public Camera cameraTrack;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3(7.5f, 2f, 0);
         cameraTrack.transform.position = new Vector3 (16.1f, 7.5f, -10f);
-        raycasting.ResetUI();
+        raycastPlayer.ResetUI();
         levelParser.LavaTouch();
     }
 }

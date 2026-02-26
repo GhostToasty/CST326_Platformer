@@ -11,7 +11,7 @@ public class Raycasting : MonoBehaviour
     public GameObject brick;
     public GameObject question;
     public TextMeshProUGUI coinText;
-    private int coinCount = 00;
+    private int coinCount = 0;
     public TextMeshProUGUI pointText;
     private int pointCount = 0;
     public LevelParser levelParser;
@@ -50,7 +50,7 @@ public class Raycasting : MonoBehaviour
                     {
                         // levelParser.CoinAnimation(clickHit.transform, coin);
                         PointCount();
-                        coinCount += 1;
+                        coinCount = coinCount + 1;
                         if (coinCount < 10)
                         {
                             string coin = $"x0{coinCount}";
@@ -74,7 +74,7 @@ public class Raycasting : MonoBehaviour
 
     void PointCount()
     {
-        pointCount += 100;
+        pointCount = pointCount + 100;
         if (pointCount < 1000)
         {
             string point = $"Mario\n000{pointCount}";

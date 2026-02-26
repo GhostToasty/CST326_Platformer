@@ -49,8 +49,6 @@ public class LevelParser : MonoBehaviour
     public TextMeshProUGUI countTime;
     private float timeLeft = 100;
     private bool gameOver = false;
-    // private bool coinTaken;
-    // public CoinCollected coin;
 
 
     void Start()
@@ -133,7 +131,6 @@ public class LevelParser : MonoBehaviour
                 {
                     Vector3 newPosition = new Vector3(columnIndex + 0.5f, row + 0.5f, 0);
                     Transform questionBoxInstance = Instantiate(questionBoxPrefab).transform;
-                    // questionBoxInstance.GetComponent<CoinCollected>().coinGotten = false;
                     questionBoxInstance.transform.position = newPosition;
                     questionBoxInstance.transform.parent = levelRoot.transform;
                 }
@@ -165,7 +162,7 @@ public class LevelParser : MonoBehaviour
     {
         foreach (Transform child in levelRoot)
         {
-            Debug.Log(child.gameObject);
+            // Debug.Log(child.gameObject);
             Destroy(child.gameObject);
         }
            
@@ -189,40 +186,6 @@ public class LevelParser : MonoBehaviour
     {
         Debug.Log("Game Win!");
     }
-
-    // public bool GetCoin(Transform questionInstance)
-    // {
-    //     if(questionInstance.GetComponent<CoinCollected>().coinGotten == false)
-    //     {
-    //         questionInstance.GetComponent<CoinCollected>().coinGotten = true;
-    //         return false;
-    //     }
-
-    //     return true;
-    // }
-
-    // public void CoinAnimation(Transform questionBoxInstance, GameObject coin)
-    // {
-    //     Vector3 boxPosition = transform.position;
-    //     // Debug.Log(boxPosition);
-    //     GameObject coinInstance = Instantiate(coin);
-    //     coinInstance.transform.position = new Vector3(boxPosition.x, boxPosition.y, -0.1f);
-
-    //     float degrees = 30;
-        
-    //     coinTime = 0;
-    //     coinAnimate = true;
-        
-    //     // while (coinAnimate == true)
-    //     // {
-    //     //     coinInstance.transform.Rotate(new Vector3(0f, 0f, degrees * Time.deltaTime));
-    //     //     Debug.Log(coinTime);
-    //     // }
-    
-    //     // Destroy(coinInstance);
-    //     coinAnimate = false;
-
-    // }
 
 }
 
