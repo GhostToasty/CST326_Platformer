@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-// using System.Numerics;
 
 public class RaycastPlayer : MonoBehaviour
 {
@@ -24,23 +23,28 @@ public class RaycastPlayer : MonoBehaviour
     void FixedUpdate()
     {
         RaycastHit playerHit;
-        Ray playerRay = new Ray(player.transform.position, Vector3.up);
+        Ray playerRay = new Ray(player.transform.position + Vector3.up * 0.01f, Vector3.up);
 
-        Debug.DrawLine(playerRay.origin, playerRay.origin + playerRay.direction * 5f, Color.green);
+        Debug.DrawLine(playerRay.origin, playerRay.origin + playerRay.direction * 2f, Color.green);
+        // Debug.Log(coinCount);
 
-        if (Physics.Raycast(playerRay, out playerHit))
+        if (Physics.Raycast(playerRay, out playerHit, 2f))
         {
             // Debug.DrawLine(playerRay.origin, playerHit.point, Color.blue);
             // Debug.Log ("hit: " + playerHit.collider.name);
             
             if (playerHit.collider != null && playerHit.collider.name != "Mario")
             {
-                Debug.Log ("hit: " + playerHit.collider.name);
+                // Debug.Log ("hit: " + playerHit.collider.name);
                 
                 if (playerHit.collider.name == "Brick(Clone)")
                 {
-                    levelParser.DestroyBrick(playerHit.transform);
-                    PointCount();
+                    if (charDrive.CheckGrounded() == false)
+                    {
+                        levelParser.DestroyBrick(playerHit.transform);
+                        PointCount();
+                    }
+                    
                     // Debug.Log("collide brick");
                 }   
 
@@ -72,6 +76,7 @@ public class RaycastPlayer : MonoBehaviour
         // Debug.Log(charDrive.CheckGrounded());
         if (charDrive.CheckGrounded() == true)
             gotCoin = false;
+
     }
 
     void PointCount()
@@ -100,7 +105,7 @@ public class RaycastPlayer : MonoBehaviour
     }
 
 
-    void ResetUI()
+    public void ResetUI()
     {
         coinCount = 0;
         pointCount = 0;

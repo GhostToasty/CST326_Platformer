@@ -1,15 +1,15 @@
 
+                                                                                                   
+                                                                                                   ?
 
-
-
-
-                                            ?                                                            g
-                                                 bbbb                                                    g
-                                                                                                         g
-                                                                                                         g
-                                   bb      bbbb                                                          g
-                                                                            ss    ss                     g
-                                                                           sss    sss                    g
-                                                                          ssss    ssss                   s
-xxxxxxxxxxxxxxxxxxxxxxxxxx   xxxxxxxx                          xxxxxxxxxxxxxxx    xxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxlllxxxxxxxxllllllllllllllllllllllllllxxxxxxxxxxxxxxxllllxxxxxxxxxxxxxxxxxxxxxxxxx
+                                                                                                                        g
+                                            ?                                                                           g
+                                                 bbbb                                          bbbbbbbbb                g
+                                                                                                                        g
+                                                                                                                        g
+                                   bb      bbbb                                                b       b                g
+                                                                            ss    ss            bbbbbbb                 g
+                                                                           sss    sss                                   g
+                                                                          ssss    ssss                                  s
+xxxxxxxxxxxxxxxxxxxxxxxxxx   xxxxxxxx                          xxxxxxxxxxxxxxx    xxxxxxxxxxxxxxxxxxxxxxxxxxxxx   xxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxlllxxxxxxxxllllllllllllllllllllllllllxxxxxxxxxxxxxxxllllxxxxxxxxxxxxxxxxxxxxxxxxxxxxxlllxxxxxxxxxxxxxxx
